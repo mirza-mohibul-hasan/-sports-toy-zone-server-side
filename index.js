@@ -34,6 +34,13 @@ async function run() {
         const result = await toysCollection.insertOne(newToy)
         res.send(result)
     })
+    // Get Toys By Category
+    app.get('/toyscategory/:category', async(req, res)=>{
+        const category = req.params.category;
+        const query = {category: category}
+        const result = await toysCollection.find(query).toArray()
+        res.send(result)
+    })
 
     /* Working Place End */
     // Send a ping to confirm a successful connection
