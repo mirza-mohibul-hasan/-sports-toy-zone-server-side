@@ -25,7 +25,16 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
     /* Working Place Start */
-    
+    const toysCollection = client.db("toysDB").collection("toys");
+
+    //POST ADD A JOBS
+    app.post('/addatoys', async(req, res)=>{
+        const newToy = req.body;
+        // console.log(newToy)
+        const result = await toysCollection.insertOne(newToy)
+        res.send(result)
+    })
+
     /* Working Place End */
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
