@@ -68,8 +68,15 @@ async function run() {
         const result = await toysCollection.find().limit(20).toArray()
         res.send(result)
       }
-        // const result = await toysCollection.find().toArray()
-        // 
+
+    })
+    // Get a toy details
+    app.get('/toydetails/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const toy = await toysCollection.findOne()
+      res.send(toy)
+
     })
 
     /* Working Place End */
