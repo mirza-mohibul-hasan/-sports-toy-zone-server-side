@@ -43,12 +43,19 @@ async function run() {
     })
     // Get My toys
     app.get('/mytoys', async(req, res)=>{
-        let query = {}
-        if (req.query?.email) {
-          query = { sellerEmail: req.query.email }
-        }
-          const result = await toysCollection.find(query).toArray()
-          res.send(result)
+      let query = {}
+      const sort = parseInt(req.query?.sort);
+      if (req.query?.email) {
+        query = { sellerEmail: req.query.email }
+      }
+      if(sort){
+        const result = await toysCollection.find(query).sort({price: sort}).toArray()
+        res.send(result)
+      }
+      else{
+        const result = await toysCollection.find(query).toArray()
+        res.send(result)
+      }
     })
 
     /* Working Place End */
