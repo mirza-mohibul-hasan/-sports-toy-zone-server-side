@@ -78,12 +78,10 @@ async function run() {
       res.send(toy)
 
     })
+    // Update A Toy
     app.put('/updatetoy/:id', async(req, res)=>{
       const id = req.params.id;
       const toy = req.body;
-      // console.log(toy.price,
-      //     toy.quantity,
-      //     toy.description)
       const filter = {_id: new ObjectId(id)}
       const options = {upsert: true};
       const updatedToy = {
@@ -96,6 +94,13 @@ async function run() {
       const result = await toysCollection.updateOne(filter, updatedToy, options)
       res.send(result)
 
+    })
+    // Delete A Toy
+    app.delete('/deletetoy/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await toysCollection.deleteOne(query)
+      res.send(result)
     })
 
     /* Working Place End */
