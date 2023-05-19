@@ -59,8 +59,17 @@ async function run() {
     })
     // Get all toys
     app.get('/alltoys', async(req, res)=>{
+      const showmore = req.query?.showmore;
+      if(showmore=='true'){
         const result = await toysCollection.find().toArray()
         res.send(result)
+      }
+      else{
+        const result = await toysCollection.find().limit(20).toArray()
+        res.send(result)
+      }
+        // const result = await toysCollection.find().toArray()
+        // 
     })
 
     /* Working Place End */
