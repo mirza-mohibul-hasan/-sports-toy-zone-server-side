@@ -17,13 +17,22 @@ const client = new MongoClient(uri, {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
-  }
+  },
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  maxPoolSize: 10,
 });
 
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
+    client.connect((err)=>{
+      if(err){
+        console.log(err)
+        return;
+      }
+    });
     /* Working Place Start */
     const toysCollection = client.db("toysDB").collection("toys");
 
@@ -68,7 +77,11 @@ async function run() {
         const result = await toysCollection.find().limit(20).toArray()
         res.send(result)
       }
-
+    })
+    // Get all toys
+    app.get('/marquetoys', async(req, res)=>{
+        const result = await toysCollection.find().limit(20).toArray()
+        res.send(result)
     })
     // Get a toy details
     app.get('/toydetails/:id', async(req, res)=>{
